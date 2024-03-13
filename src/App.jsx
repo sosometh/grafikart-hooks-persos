@@ -1,5 +1,7 @@
+import { useState } from "react"
 import { useIncrement } from "./hooks/useIncrement"
 import { useToggle } from "./hooks/useToggle"
+import { useDocumentTitle } from "./hooks/useDocumentTitle"
 
 function App() {
 
@@ -7,12 +9,15 @@ function App() {
 
   const [count, incrCount, decrCount] = useIncrement(10)
 
+  const [name, setName] = useState('')
+  useDocumentTitle(name ? `Editer ${name}` : null)
+
   return <div className='flex flex-col gap-2 p-8'>
     <div>
       <h2 className="font-bold" >Hook personnalisé toggleCheck</h2>
       <div className="flex gap-2 p-4">
         <input type="checkbox" checked={checked} onChange={toggleCheck} />
-        {checked && "Je suis choché"}
+        {checked && "Je suis checked"}
       </div>
     </div>
     <div>
@@ -32,6 +37,10 @@ function App() {
           +
         </button>
       </div>
+    </div>
+    <div>
+      <h2 className="font-bold" >Modifier le titre de la page avec le hook perso useDocumentTitle</h2>
+      <input className="border-2 rounded-md mt-4" type="text" value={name} onChange={e => setName(e.target.value)} />
     </div>
   </div>
 }
